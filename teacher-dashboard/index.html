@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Instructor Dashboard — Advanced Corporate Finance</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f3a5f'/%3E%3Ctext x='16' y='22' font-size='18' text-anchor='middle' fill='%237fd0d8' font-family='Georgia'%3E%E2%88%91%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --navy-900:#12233c; --navy-800:#1f3a5f; --navy-700:#2b4a75; --navy-100:#e8eef6;
+  --teal-600:#0e7c86; --teal-500:#12939e; --teal-100:#e2f3f4;
+  --accent:#c46a2b; --danger:#b23a48; --ok:#2e7d32;
+  --ink:#1c2733; --ink-soft:#41505f; --muted:#67757f;
+  --paper:#fff; --paper-2:#f7f9fb; --line:#dbe3ea; --line-soft:#e8edf2;
+  --radius:14px; --radius-sm:9px;
+  --shadow-1:0 1px 2px rgba(18,35,60,.06),0 4px 14px rgba(18,35,60,.06);
+  --shadow-2:0 10px 40px rgba(10,22,40,.28);
+  --font:"Segoe UI",system-ui,-apple-system,"Helvetica Neue","Noto Sans Arabic","Noto Kufi Arabic",Tahoma,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman","Noto Naskh Arabic",serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--font);color:var(--ink);background:var(--paper-2);min-height:100vh}
+button{font:inherit;cursor:pointer}
+input{font:inherit}
+.muted{color:var(--muted)} .small{font-size:.8rem}
+/* ---------- login screen ---------- */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+  background:
+    radial-gradient(1100px 500px at 85% -10%, rgba(18,147,158,.22), transparent 60%),
+    radial-gradient(900px 480px at 8% 110%, rgba(196,106,43,.16), transparent 60%),
+    linear-gradient(155deg,#0d1c31 0%,#1f3a5f 55%,#17475c 100%);}
+.login-card{width:100%;max-width:430px;background:rgba(255,255,255,.98);border-radius:20px;box-shadow:var(--shadow-2);
+  padding:34px 34px 26px;position:relative;animation:pop .35s ease}
+@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.login-card.shake{animation:shake .4s ease}
+@keyframes shake{20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+.lc-brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.lc-mark{display:grid;place-items:center;width:46px;height:46px;border-radius:12px;
+  background:linear-gradient(140deg,var(--teal-600),var(--navy-700));color:#dff6f8;font-family:var(--serif);font-size:25px;flex:none}
+.lc-brand b{display:block;font-family:var(--serif);color:var(--navy-900);font-size:1.06rem;line-height:1.25}
+.lc-brand small{color:var(--muted);font-size:.78rem}
+.login-card h1{font-family:var(--serif);color:var(--navy-900);font-size:1.45rem;margin:2px 0 4px}
+.login-card .sub{color:var(--muted);font-size:.9rem;margin:0 0 20px;line-height:1.55}
+.field{position:relative;margin-bottom:14px}
+.field label{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft);margin-bottom:6px}
+.field .in-wrap{position:relative}
+.field input{width:100%;padding:13px 46px 13px 42px;border:1.5px solid var(--line);border-radius:var(--radius-sm);
+  background:var(--paper-2);transition:border-color .15s, background .15s, box-shadow .15s}
+[dir="rtl"] .field input{padding:13px 42px 13px 46px}
+.field input:focus{outline:none;border-color:var(--teal-500);background:#fff;box-shadow:0 0 0 4px rgba(18,147,158,.13)}
+.field .ic{position:absolute;inset-inline-start:13px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;display:flex}
+.field .eye{position:absolute;inset-inline-end:8px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--muted);
+  padding:6px;border-radius:8px;display:flex}
+.field .eye:hover{color:var(--navy-800);background:var(--navy-100)}
+.status-line{display:flex;align-items:center;gap:8px;min-height:22px;margin:2px 0 12px;font-size:.83rem}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:.76rem;font-weight:600}
+.chip .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.chip.idle{background:var(--navy-100);color:var(--navy-700)}
+.chip.check{background:#fdf3e7;color:var(--accent)}
+.chip.ok{background:#e6f2e7;color:var(--ok)}
+.chip.no{background:#f9e8ea;color:var(--danger)}
+.btn{border:1px solid transparent;border-radius:var(--radius-sm);padding:11px 18px;font-weight:600;transition:filter .12s, background .12s}
+.btn-primary{background:linear-gradient(135deg,var(--teal-600),var(--teal-500));color:#fff;width:100%;font-size:1rem;padding:13px;
+  box-shadow:0 6px 18px rgba(14,124,134,.35)}
+.btn-primary:hover{filter:brightness(1.06)}
+.btn-primary:disabled{opacity:.65;cursor:wait;box-shadow:none}
+.btn-ghost{background:#fff;border-color:var(--line);color:var(--navy-800)}
+.btn-ghost:hover{background:var(--navy-100)}
+.err{color:var(--danger);font-size:.85rem;font-weight:600;margin:10px 0 0}
+.help{margin-top:16px;border-top:1px solid var(--line-soft);padding-top:10px}
+.help summary{cursor:pointer;color:var(--navy-700);font-size:.83rem;font-weight:600}
+.help ol{margin:8px 0 0;padding-inline-start:20px;color:var(--ink-soft);font-size:.82rem;line-height:1.7}
+.langpill{position:absolute;top:16px;inset-inline-end:16px;display:flex;background:var(--navy-100);border-radius:999px;padding:3px;gap:2px}
+.langpill button{border:0;background:transparent;color:var(--navy-700);border-radius:999px;padding:4px 12px;font-size:.8rem;font-weight:600}
+.langpill button.on{background:#fff;color:var(--navy-900);box-shadow:var(--shadow-1)}
+.spin{width:14px;height:14px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;display:inline-block;animation:rot .7s linear infinite;vertical-align:-2px;margin-inline-end:8px}
+@keyframes rot{to{transform:rotate(360deg)}}
+/* ---------- dashboard ---------- */
+.topbar{position:sticky;top:0;z-index:30;background:var(--navy-900);color:#fff;box-shadow:var(--shadow-1)}
+.topbar-in{max-width:1160px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:14px}
+.tb-brand{display:flex;align-items:center;gap:10px;margin-inline-end:auto}
+.tb-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:linear-gradient(140deg,var(--teal-600),var(--navy-700));color:#dff6f8;font-family:var(--serif);font-size:19px}
+.tb-brand b{font-family:var(--serif);font-size:.98rem;display:block;line-height:1.2}
+.tb-brand small{color:#9fb6cd;font-size:.72rem}
+.icon-btn{background:transparent;border:1px solid rgba(255,255,255,.22);color:#dce8f2;border-radius:9px;padding:7px 9px;display:flex;align-items:center;gap:7px;font-size:.83rem}
+.icon-btn:hover{background:rgba(255,255,255,.1)}
+.langpill.dark{background:rgba(255,255,255,.12);position:static}
+.langpill.dark button{color:#cfe0ee}
+.langpill.dark button.on{background:#fff;color:var(--navy-900)}
+.wrap{max-width:1160px;margin:0 auto;padding:20px 18px 46px}
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.toolbar .spacer{margin-inline-start:auto}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-1);padding:14px 16px}
+.stat .ico{font-size:1.05rem}
+.stat strong{display:block;font-family:var(--serif);font-size:1.55rem;color:var(--navy-900);margin:2px 0}
+.stat span.lab{font-size:.78rem;color:var(--muted)}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-1);overflow:hidden;margin-bottom:18px}
+.card>h2{margin:0;padding:14px 18px;font-size:.98rem;font-family:var(--serif);color:var(--navy-900);border-bottom:1px solid var(--line-soft);
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card>h2 .hint{font-family:var(--font);font-size:.76rem;color:var(--muted);font-weight:400;margin-inline-start:auto}
+.card .body{padding:16px 18px}
+.tbl{width:100%;border-collapse:collapse;font-size:.88rem}
+.tbl th{color:var(--navy-800);font-size:.75rem;text-transform:uppercase;letter-spacing:.03em;border-bottom:2px solid var(--line);padding:8px 10px;text-align:start;white-space:nowrap}
+.tbl td{border-bottom:1px solid var(--line-soft);padding:8px 10px;white-space:nowrap}
+.tbl tbody tr:hover{background:var(--paper-2)}
+.nm{font-weight:600;color:var(--navy-900)}
+.scroll{overflow-x:auto}
+.pctbar{display:inline-block;width:88px;height:8px;border-radius:5px;background:var(--navy-100);overflow:hidden;vertical-align:middle}
+.pctbar>i{display:block;height:100%;background:linear-gradient(90deg,var(--teal-600),var(--teal-500))}
+.pctnum{margin-inline-start:8px;font-size:.8rem;color:var(--ink-soft)}
+.qs{font-weight:700}.qs.good{color:var(--ok)}.qs.mid{color:var(--accent)}.qs.bad{color:var(--danger)}
+.matrix{border-collapse:separate;border-spacing:3px;font-size:.78rem}
+.matrix th{color:var(--muted);font-weight:600;padding:2px 6px;text-align:center}
+.matrix th:first-child{text-align:start}
+.matrix td{width:30px;height:26px;text-align:center;border-radius:6px;color:#fff;font-weight:700}
+.matrix td.nm{width:auto;background:none;color:var(--navy-900);text-align:start;white-space:nowrap;padding-inline-end:10px}
+.mx-done{background:var(--teal-600)} .mx-part{background:#8fb8c9;color:var(--navy-900)} .mx-no{background:var(--line-soft)}
+.rate{min-width:150px}
+.rate-bar{display:inline-block;width:86px;height:8px;border-radius:5px;background:var(--line-soft);overflow:hidden;vertical-align:middle;margin-inline-end:8px}
+.rate-bar>i{display:block;height:100%;border-radius:5px}
+.rate-bar i.good{background:var(--ok)}.rate-bar i.mid{background:var(--accent)}.rate-bar i.bad{background:var(--danger)}
+.feed{list-style:none;margin:0;padding:0;font-size:.87rem}
+.feed li{padding:7px 2px;border-bottom:1px solid var(--line-soft);color:var(--ink-soft)}
+.feed b{color:var(--navy-900)}
+.feed .ago{display:inline-block;min-width:96px;color:var(--muted);font-size:.77rem}
+.chart-host{width:100%;overflow-x:auto}
+.chart{width:100%;height:auto}
+.chart .grid{stroke:var(--line-soft)} .chart .tick{fill:var(--muted);font-size:11px}
+.chart .legend{fill:var(--ink-soft);font-size:12px}
+.gate-note{background:#fdf3e7;border:1px solid #ecd3b6;color:#7a4a17;border-radius:var(--radius-sm);padding:10px 14px;font-size:.85rem;margin-bottom:14px}
+@media (max-width:640px){ .stats{grid-template-columns:repeat(2,1fr)} .login-card{padding:26px 22px} }
+@media print{ .topbar,.toolbar{display:none} .card{box-shadow:none} }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* ============================================================
+   Instructor Dashboard — standalone mini-site (single file).
+   Reads the course tracking sheet via the Apps Script endpoint.
+   Zero dependencies; works from disk (file://) or any host.
+   ============================================================ */
+(function () {
+  'use strict';
+  /* TEACHER endpoint (same as site/js/tracking.js). Per-device override
+     via the gear button; 'off' is not meaningful here. */
+  var DEFAULT_URL = 'https://script.google.com/macros/s/AKfycbxvCkanJfARYG0wGtsgQ4TF-z7Bgl35FlVJaCzFUgiC2KUg2kE-iivQN_Fx-TtLi0lz/exec';
+  var LS_URL = 'acf_teacher_url_v1', LS_KEY = 'acf_teacher_key_v1', LS_LANG = 'acf_teacher_lang_v1';
+
+  var LESSONS = [
+    { id: 'l1', t: { en: 'Return and Risk Defined', ar: 'تعريف العائد والمخاطر' } },
+    { id: 'l2', t: { en: 'Measuring Risk', ar: 'قياس المخاطر' } },
+    { id: 'l3', t: { en: 'Portfolio Return & Beta', ar: 'عائد المحفظة وبيتا' } },
+    { id: 'l4', t: { en: 'CAPM & the SML', ar: 'نموذج CAPM وخط SML' } },
+    { id: 'l5', t: { en: 'M&M I & II (no taxes)', ar: 'فرضيتا M&M بدون ضرائب' } },
+    { id: 'l6', t: { en: 'M&M with taxes & trade-off', ar: 'M&M مع الضرائب والمقايضة' } },
+    { id: 'l7', t: { en: 'EBIT–EPS approach', ar: 'مدخل EBIT–EPS' } },
+    { id: 'l8', t: { en: 'Share-value approach', ar: 'مدخل قيمة السهم' } }
+  ];
+
+  var STR = {
+    en: {
+      docTitle: 'Instructor Dashboard — Advanced Corporate Finance',
+      brand: 'Advanced Corporate Finance', brandSub: 'Instructor tracking',
+      loginTitle: 'Instructor sign-in',
+      loginSub: 'Private dashboard for student engagement, progress and question-level analytics — read live from your course Google Sheet.',
+      keyLabel: 'Instructor key', keyPh: 'e.g. ACF-7V4WPHLV',
+      signIn: 'Open my dashboard', signing: 'Verifying…',
+      chipIdle: 'Not connected yet', chipCheck: 'Contacting the sheet…', chipOk: 'Key accepted', chipNo: 'Access denied',
+      errKey: 'Please enter your instructor key.',
+      errUnauth: 'That key was rejected. Check TEACHER_KEY in Apps Script → Project Settings → Script Properties.',
+      errNet: 'Could not reach the tracking endpoint. Check your connection, or the endpoint URL in ⚙ settings.',
+      whereKey: 'Where do I find my key?',
+      whereKeyBody: ['Open your tracking Google Sheet → Extensions → Apps Script.', 'Project Settings ⚙ → Script Properties → TEACHER_KEY.', 'Or re-run the setup() function: it shows the key in a dialog.'],
+      dashTitle: 'Overview', refresh: 'Refresh', csv: 'Export CSV', signout: 'Sign out',
+      settings: 'Endpoint settings', urlLabel: 'Apps Script web-app URL', save: 'Save', test: 'Test', testOk: 'Reachable ✓', testNo: 'Unreachable',
+      updated: 'Updated', loading: 'Loading data from the course sheet…',
+      stStudents: 'students', stToday: 'active today', stWeek: 'active this week', stProg: 'avg. progress', stQuiz: 'avg. quiz', stHours: 'study hours (all)',
+      dailyTitle: 'Activity — last 30 days', dailyV: 'Visits', dailyM: 'Study minutes',
+      studentsTitle: 'Students', thName: 'Student', thSeen: 'Last seen', thVisits: 'Visits', thTime: 'Study time', thDone: 'Lessons', thProg: 'Progress', thQuiz: 'Quiz',
+      matrixTitle: 'Lesson completion matrix', matrixHint: '✓ completed · ◔ started · hover a cell for study time',
+      quizTitle: 'Question analytics', quizHint: 'hardest first — worth reteaching',
+      thQ: 'Question', thAtt: 'Attempts', thRate: 'Success',
+      feedTitle: 'Recent activity',
+      noData: 'No data yet — it appears here as soon as students use the site.',
+      unnamed: '(unnamed)', agoNow: 'just now', agoMin: '{n} min ago', agoHour: '{n} h ago', agoDay: '{n} d ago',
+      durHM: '{h}h {m}m', durM: '{m}m', qN: 'Q{n}', lessonN: 'Lesson {n}',
+      actVisit: 'opened the site', actLessonOpen: 'opened a lesson', actLessonClose: 'left a lesson',
+      actLessonComplete: 'marked a lesson complete', actLessonReopen: 'reopened a completed lesson',
+      actQuiz: 'answered a quiz question', actIdentity: 'set their name', actOther: 'activity',
+      correct: 'correct', incorrect: 'wrong', privacy: 'Read-only view of your sheet. Students only share a name, lesson progress, quiz results and study time.'
+    },
+    ar: {
+      docTitle: 'لوحة المعلم — التمويل المؤسسي المتقدم',
+      brand: 'التمويل المؤسسي المتقدم', brandSub: 'تتبع المعلم',
+      loginTitle: 'دخول المعلم',
+      loginSub: 'لوحة خاصة لنشاط الطلاب وتقدمهم وتحليل الأسئلة — تُقرأ مباشرة من ورقة المقرر في Google Sheets.',
+      keyLabel: 'مفتاح المعلم', keyPh: 'مثال: ACF-7V4WPHLV',
+      signIn: 'افتح لوحتي', signing: 'جارٍ التحقق…',
+      chipIdle: 'غير متصل بعد', chipCheck: 'جارٍ الاتصال بالورقة…', chipOk: 'المفتاح مقبول', chipNo: 'تم رفض المفتاح',
+      errKey: 'يرجى إدخال مفتاح المعلم.',
+      errUnauth: 'المفتاح مرفوض. تحقق من TEACHER_KEY في Apps Script ← Project Settings ← Script Properties.',
+      errNet: 'تعذّر الوصول إلى نقطة التتبع. تحقق من الاتصال أو من الرابط في إعدادات ⚙.',
+      whereKey: 'أين أجد مفتاحي؟',
+      whereKeyBody: ['افتح ورقة التتبع ← الإضافات ← Apps Script.', 'Project Settings ⚙ ← Script Properties ← TEACHER_KEY.', 'أو أعد تشغيل الدالة setup() — سيظهر المفتاح في نافذة.'],
+      dashTitle: 'نظرة عامة', refresh: 'تحديث', csv: 'تصدير CSV', signout: 'خروج',
+      settings: 'إعدادات النقطة', urlLabel: 'رابط تطبيق الويب (Apps Script)', save: 'حفظ', test: 'اختبار', testOk: 'يصل ✓', testNo: 'لا يصل',
+      updated: 'آخر تحديث', loading: 'جارٍ قراءة البيانات من ورقة المقرر…',
+      stStudents: 'طالبًا', stToday: 'نشط اليوم', stWeek: 'نشط هذا الأسبوع', stProg: 'متوسط التقدم', stQuiz: 'متوسط الاختبارات', stHours: 'ساعات الدراسة (الكل)',
+      dailyTitle: 'النشاط — آخر 30 يومًا', dailyV: 'الزيارات', dailyM: 'دقائق الدراسة',
+      studentsTitle: 'الطلاب', thName: 'الطالب', thSeen: 'آخر ظهور', thVisits: 'الزيارات', thTime: 'زمن الدراسة', thDone: 'الدروس', thProg: 'التقدم', thQuiz: 'الاختبار',
+      matrixTitle: 'مصفوفة إكمال الدروس', matrixHint: '✓ مكتمل · ◔ بدأ · مرّر فوق الخلية لزمن الدراسة',
+      quizTitle: 'تحليل الأسئلة', quizHint: 'الأصعب أولًا — تستحق إعادة الشرح',
+      thQ: 'السؤال', thAtt: 'المحاولات', thRate: 'النجاح',
+      feedTitle: 'آخر النشاطات',
+      noData: 'لا بيانات بعد — ستظهر هنا بمجرد استخدام الطلاب للموقع.',
+      unnamed: '(بدون اسم)', agoNow: 'الآن', agoMin: 'قبل {n} دقيقة', agoHour: 'قبل {n} ساعة', agoDay: 'قبل {n} يوم',
+      durHM: '{h} س {m} د', durM: '{m} د', qN: 'س{n}', lessonN: 'الدرس {n}',
+      actVisit: 'فتح الموقع', actLessonOpen: 'فتح درسًا', actLessonClose: 'غادر درسًا',
+      actLessonComplete: 'أتمّ درسًا', actLessonReopen: 'أعاد فتح درس مُتم',
+      actQuiz: 'أجاب على سؤال', actIdentity: 'سجّل اسمه', actOther: 'نشاط',
+      correct: 'صحيح', incorrect: 'خطأ', privacy: 'عرض للقراءة فقط من ورقتك. يشارك الطلاب اسمًا وتقدمًا في الدروس ونتائج أسئلة وزمن دراسة فقط.'
+    }
+  };
+  var lang = (function () { try { return localStorage.getItem(LS_LANG) === 'ar' ? 'ar' : 'en'; } catch (e) { return 'en'; } })();
+  function t(k) { return (STR[lang] && STR[lang][k]) || STR.en[k] || k; }
+  function L(p) { return p ? (p[lang] || p.en || '') : ''; }
+  function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { v ? localStorage.setItem(k, v) : localStorage.removeItem(k); } catch (e) { } }
+  function url() { return (lsGet(LS_URL) || DEFAULT_URL || '').trim(); }
+
+  /* ---------- api (fetch → JSONP fallback for file://) ---------- */
+  function apiGet(params) {
+    return new Promise(function (resolve, reject) {
+      var qs = Object.keys(params).map(function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]); }).join('&');
+      var full = url() + (url().indexOf('?') >= 0 ? '&' : '?') + qs;
+      var done = false, to = setTimeout(function () { if (!done) { done = true; reject(new Error('timeout')); } }, 25000);
+      function fin(fn, v) { if (!done) { done = true; clearTimeout(to); fn(v); } }
+      if (typeof fetch === 'function') {
+        fetch(full).then(function (r) { return r.json(); }).then(function (j) { fin(resolve, j); }, function () { fin(function () { jsonp(params, resolve, reject); }); });
+      } else jsonp(params, resolve, reject);
+    });
+  }
+  function jsonp(params, resolve, reject) {
+    var cb = '__tcb_' + Math.random().toString(36).slice(2);
+    var qs = Object.keys(params).map(function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]); }).join('&');
+    var s = document.createElement('script');
+    var to = setTimeout(function () { cleanup(); reject(new Error('jsonp timeout')); }, 20000);
+    function cleanup() { clearTimeout(to); delete window[cb]; if (s.parentNode) s.parentNode.removeChild(s); }
+    window[cb] = function (j) { cleanup(); resolve(j); };
+    s.src = url() + (url().indexOf('?') >= 0 ? '&' : '?') + qs + '&callback=' + cb;
+    s.onerror = function () { cleanup(); reject(new Error('jsonp error')); };
+    document.head.appendChild(s);
+  }
+
+  /* ---------- format helpers ---------- */
+  function ago(ts) {
+    if (!ts) return '—';
+    var s = Math.max(0, (Date.now() - ts) / 1000), n, k;
+    if (s < 60) return t('agoNow');
+    if (s < 3600) { n = Math.round(s / 60); k = 'agoMin'; }
+    else if (s < 86400) { n = Math.round(s / 3600); k = 'agoHour'; }
+    else { n = Math.round(s / 86400); k = 'agoDay'; }
+    return t(k).replace('{n}', n);
+  }
+  function dur(sec) {
+    sec = Math.max(0, Math.round(sec || 0));
+    var h = Math.floor(sec / 3600), m = Math.round((sec % 3600) / 60);
+    return h ? t('durHM').replace('{h}', h).replace('{m}', m) : t('durM').replace('{m}', m);
+  }
+  function fdate(ts) { try { return new Date(ts).toLocaleString(lang === 'ar' ? 'ar-EG' : 'en-GB'); } catch (e) { return ''; } }
+  function lnum(id) { for (var i = 0; i < LESSONS.length; i++) if (LESSONS[i].id === id) return i + 1; return '?'; }
+
+  /* ---------- state & shell ---------- */
+  var state = { view: 'login', data: null, busy: false, err: '', chip: 'idle', settingsOpen: false };
+  var app = document.getElementById('app');
+
+  function setLang(l) {
+    lang = l === 'ar' ? 'ar' : 'en';
+    lsSet(LS_LANG, lang);
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.title = t('docTitle');
+    render();
+  }
+  function langPill(dark) {
+    return '<div class="langpill' + (dark ? ' dark' : '') + '" role="group">' +
+      '<button class="' + (lang === 'en' ? 'on' : '') + '" data-lang="en">EN</button>' +
+      '<button class="' + (lang === 'ar' ? 'on' : '') + '" data-lang="ar">عربي</button></div>';
+  }
+  function render() {
+    if (state.view === 'login') renderLogin();
+    else if (state.view === 'dash') renderDash();
+  }
+
+  /* ---------- login ---------- */
+  function renderLogin() {
+    var chip = { idle: ['idle', t('chipIdle')], check: ['check', '<span class="spin" style="border-color:rgba(196,106,43,.35);border-top-color:var(--accent)"></span>' + t('chipCheck')], ok: ['ok', t('chipOk')], no: ['no', t('chipNo')] }[state.chip];
+    app.innerHTML =
+      '<div class="login-wrap">' + langPill(false) +
+      '<div class="login-card' + (state.err === 'unauth' ? ' shake' : '') + '" id="login-card">' +
+        '<div class="lc-brand"><span class="lc-mark">∑</span><span><b>' + t('brand') + '</b><small>' + t('brandSub') + '</small></span></div>' +
+        '<h1>🔐 ' + t('loginTitle') + '</h1>' +
+        '<p class="sub">' + t('loginSub') + '</p>' +
+        '<div class="field"><label for="key">' + t('keyLabel') + '</label><div class="in-wrap">' +
+          '<span class="ic"><svg viewBox="0 0 24 24" width="17" height="17"><path fill="currentColor" d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 8V7a3 3 0 1 1 6 0v3H9z"/></svg></span>' +
+          '<input id="key" type="password" dir="ltr" autocomplete="current-password" placeholder="' + esc(t('keyPh')) + '" value="' + esc(lsGet(LS_KEY) || '') + '">' +
+          '<button class="eye" id="eye" aria-label="show/hide"><svg viewBox="0 0 24 24" width="17" height="17"><path fill="currentColor" d="M12 5c-5 0-9 4.5-10 7 1 2.5 5 7 10 7s9-4.5 10-7c-1-2.5-5-7-10-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/></svg></button>' +
+        '</div></div>' +
+        '<div class="status-line"><span class="chip ' + chip[0] + '"><span class="dot"></span>' + chip[1] + '</span>' +
+          '<button class="icon-btn" id="gear" style="border-color:var(--line);color:var(--muted);margin-inline-start:auto" title="' + esc(t('settings')) + '"><svg viewBox="0 0 24 24" width="15" height="15"><path fill="currentColor" d="M19.4 13a7.6 7.6 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7.6 7.6 0 0 0-1.7-1L15 3.4h-4l-.3 2.6a7.6 7.6 0 0 0-1.7 1l-2.4-1-2 3.4L6.6 11a7.6 7.6 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.6 7.6 0 0 0 1.7 1l.3 2.6h4l.3-2.6a7.6 7.6 0 0 0 1.7-1l2.4 1 2-3.4zM13 15a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg></button></div>' +
+        (state.settingsOpen ? '<div class="field"><label for="url">' + t('urlLabel') + '</label><input id="url" dir="ltr" value="' + esc(url()) + '"></div>' +
+          '<div style="display:flex;gap:8px;margin-bottom:10px"><button class="btn btn-ghost" id="save-url">' + t('save') + '</button><button class="btn btn-ghost" id="test-url">' + t('test') + '</button><span id="url-msg" class="small muted"></span></div>' : '') +
+        (state.err ? '<p class="err" id="login-err">' + esc(state.err === 'unauth' ? t('errUnauth') : state.err === 'key' ? t('errKey') : t('errNet')) + '</p>' : '') +
+        '<button class="btn btn-primary" id="go"' + (state.busy ? ' disabled' : '') + '>' + (state.busy ? '<span class="spin"></span>' + t('signing') : t('signIn')) + '</button>' +
+        '<details class="help"><summary>' + t('whereKey') + '</summary><ol>' + t('whereKeyBody').map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ol></details>' +
+      '</div></div>';
+    bindLogin();
+  }
+  function bindLogin() {
+    document.querySelectorAll('[data-lang]').forEach(function (b) { b.onclick = function () { setLang(b.dataset.lang); }; });
+    var eye = document.getElementById('eye'), key = document.getElementById('key');
+    eye.onclick = function () { key.type = key.type === 'password' ? 'text' : 'password'; key.focus(); };
+    document.getElementById('gear').onclick = function () { state.settingsOpen = !state.settingsOpen; renderLogin(); };
+    var su = document.getElementById('save-url');
+    if (su) su.onclick = function () { lsSet(LS_URL, document.getElementById('url').value.trim()); document.getElementById('url-msg').textContent = '✓'; };
+    var tu = document.getElementById('test-url');
+    if (tu) tu.onclick = function () {
+      var v = document.getElementById('url').value.trim(); if (v) lsSet(LS_URL, v);
+      var m = document.getElementById('url-msg'); m.textContent = '…';
+      apiGet({ action: 'ping' }).then(function (j) { m.textContent = j && j.ok ? t('testOk') : t('testNo'); }, function () { m.textContent = t('testNo'); });
+    };
+    function submit() {
+      var k = key.value.trim();
+      if (!k) { state.err = 'key'; renderLogin(); var c = document.getElementById('login-card'); if (c) c.classList.add('shake'); return; }
+      state.busy = true; state.err = ''; state.chip = 'check'; renderLogin();
+      apiGet({ action: 'dashboard', key: k }).then(function (d) {
+        state.busy = false;
+        if (d && d.ok) { lsSet(LS_KEY, k); state.key = k; state.data = d; state.view = 'dash'; state.chip = 'ok'; render(); }
+        else { state.chip = 'no'; state.err = 'unauth'; renderLogin(); }
+      }, function () { state.busy = false; state.chip = 'no'; state.err = 'net'; renderLogin(); });
+    }
+    document.getElementById('go').onclick = submit;
+    key.onkeydown = function (e) { if (e.key === 'Enter') submit(); };
+    setTimeout(function () { key.focus(); }, 60);
+  }
+
+  /* ---------- dashboard ---------- */
+  function topbar() {
+    return '<header class="topbar"><div class="topbar-in">' +
+      '<div class="tb-brand"><span class="tb-mark">∑</span><span><b>' + t('brand') + '</b><small>' + t('brandSub') + '</small></span></div>' +
+      langPill(true) +
+      '<button class="icon-btn" id="t-refresh"><svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M17.65 6.35A8 8 0 1 0 20 12h-2a6 6 0 1 1-1.76-4.24L13 11h7V4z"/></svg>' + t('refresh') + '</button>' +
+      '<button class="icon-btn" id="t-csv"><svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12 3l5 5h-3v7h-4V8H7zM5 19h14v2H5z"/></svg>' + t('csv') + '</button>' +
+      '<button class="icon-btn" id="t-out">' + t('signout') + '</button>' +
+      '</div></header>';
+  }
+  function statCard(ico, val, lab) { return '<div class="stat"><span class="ico">' + ico + '</span><strong>' + val + '</strong><span class="lab">' + lab + '</span></div>'; }
+  function renderDash() {
+    var d = state.data || {};
+    var s = d.summary || {};
+    var h = topbar() + '<div class="wrap">';
+    h += '<div class="toolbar"><span class="muted small">' + t('updated') + ': ' + esc(fdate(d.generated || Date.now())) + '</span>' +
+      '<span class="spacer"></span><span class="muted small">' + t('privacy') + '</span></div>';
+    h += '<div class="stats">' +
+      statCard('👥', s.students || 0, t('stStudents')) +
+      statCard('⚡', s.activeToday || 0, t('stToday')) +
+      statCard('📅', s.active7d || 0, t('stWeek')) +
+      statCard('📈', Math.round(s.avgProgress || 0) + '%', t('stProg')) +
+      statCard('✅', s.quizTotal ? Math.round(s.avgQuiz || 0) + '%' : '—', t('stQuiz')) +
+      statCard('⏱', Math.round((s.totalSeconds || 0) / 360) / 10, t('stHours')) +
+      '</div>';
+    var days = d.daily || [];
+    if (days.length > 1) h += '<div class="card"><h2>📊 ' + t('dailyTitle') + '</h2><div class="body"><div id="daily" class="chart-host"></div></div></div>';
+    var studs = (d.students || []).slice().sort(function (a, b) { return (b.pct || 0) - (a.pct || 0) || (b.lastSeen || 0) - (a.lastSeen || 0); });
+    h += '<div class="card"><h2>🧑‍🎓 ' + t('studentsTitle') + ' (' + studs.length + ')</h2><div class="body">';
+    if (!studs.length) h += '<p class="muted">' + t('noData') + '</p>';
+    else h += '<div class="scroll"><table class="tbl"><thead><tr><th>' + t('thName') + '</th><th>' + t('thSeen') + '</th><th>' + t('thVisits') + '</th><th>' + t('thTime') + '</th><th>' + t('thDone') + '</th><th>' + t('thProg') + '</th><th>' + t('thQuiz') + '</th></tr></thead><tbody>' +
+      studs.map(function (st) {
+        var qt = st.quizTotal ? Math.round(st.quizCorrect / st.quizTotal * 100) : null;
+        var p = Math.max(0, Math.min(100, Math.round(st.pct || 0)));
+        return '<tr><td class="nm" dir="auto">' + esc(st.name || t('unnamed')) + '</td>' +
+          '<td title="' + esc(fdate(st.lastSeen)) + '">' + ago(st.lastSeen) + '</td><td>' + (st.visits || 0) + '</td>' +
+          '<td>' + dur(st.seconds) + '</td><td>' + (st.lessonsDone || 0) + '/' + (st.total || LESSONS.length) + '</td>' +
+          '<td><span class="pctbar"><i style="width:' + p + '%"></i></span><span class="pctnum">' + p + '%</span></td>' +
+          '<td>' + (qt === null ? '—' : '<span class="qs ' + (qt >= 70 ? 'good' : qt >= 45 ? 'mid' : 'bad') + '">' + qt + '%</span>') + '</td></tr>';
+      }).join('') + '</tbody></table></div>';
+    h += '</div></div>';
+    /* matrix */
+    h += '<div class="card"><h2>🔥 ' + t('matrixTitle') + '<span class="hint">' + t('matrixHint') + '</span></h2><div class="body"><div class="scroll"><table class="matrix"><thead><tr><th>' + t('thName') + '</th>' +
+      LESSONS.map(function (l, i) { return '<th title="' + esc(L(l.t)) + '">' + (i + 1) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+      studs.map(function (st) {
+        return '<tr><td class="nm" dir="auto">' + esc(st.name || t('unnamed')) + '</td>' + LESSONS.map(function (l) {
+          var p = (st.lessons || {})[l.id];
+          var cls = p && p.done ? 'mx-done' : (p && p.seconds > 60 ? 'mx-part' : 'mx-no');
+          return '<td class="' + cls + '" title="' + esc(p ? dur(p.seconds) + (p.done ? ' ✓' : '') : '—') + '">' + (p && p.done ? '✓' : (p && p.seconds > 60 ? '◔' : '')) + '</td>';
+        }).join('') + '</tr>';
+      }).join('') + '</tbody></table></div></div></div>';
+    /* questions */
+    var qs = (d.questions || []).slice().sort(function (a, b) { return (a.rate || 0) - (b.rate || 0); });
+    h += '<div class="card"><h2>🎯 ' + t('quizTitle') + '<span class="hint">' + t('quizHint') + '</span></h2><div class="body">';
+    if (!qs.length) h += '<p class="muted">' + t('noData') + '</p>';
+    else h += '<div class="scroll"><table class="tbl"><thead><tr><th>' + t('thQ') + '</th><th>' + t('thAtt') + '</th><th>' + t('thRate') + '</th></tr></thead><tbody>' +
+      qs.slice(0, 40).map(function (q) {
+        var rate = Math.round((q.rate || 0) * 100);
+        return '<tr><td><span class="qs" style="background:var(--navy-100);color:var(--navy-800);border-radius:6px;padding:1px 8px;font-size:.74rem;margin-inline-end:8px">' +
+          esc(t('lessonN').replace('{n}', lnum(q.lesson))) + ' · ' + esc(t('qN').replace('{n}', (q.q || 0) + 1)) + '</span>' +
+          '<span class="muted small" dir="auto">' + esc(L((LESSONS[lnum(q.lesson) - 1] || {}).t)) + '</span></td>' +
+          '<td>' + (q.attempts || 0) + '</td>' +
+          '<td class="rate"><span class="rate-bar"><i class="' + (rate >= 70 ? 'good' : rate >= 45 ? 'mid' : 'bad') + '" style="width:' + rate + '%"></i></span><b>' + rate + '%</b></td></tr>';
+      }).join('') + '</tbody></table></div>';
+    h += '</div></div>';
+    /* feed */
+    var acts = (d.activity || []).slice(0, 20);
+    var ACT = { visit: 'actVisit', lesson_open: 'actLessonOpen', lesson_close: 'actLessonClose', lesson_complete: 'actLessonComplete', lesson_reopen: 'actLessonReopen', quiz_answer: 'actQuiz', identity: 'actIdentity' };
+    h += '<div class="card"><h2>🕒 ' + t('feedTitle') + '</h2><div class="body">';
+    if (!acts.length) h += '<p class="muted">' + t('noData') + '</p>';
+    else h += '<ul class="feed">' + acts.map(function (a) {
+      var extra = a.lesson ? ' · ' + esc(t('lessonN').replace('{n}', lnum(a.lesson))) : '';
+      if (a.type === 'quiz_answer') extra += ' · <span class="qs ' + (a.ok ? 'good' : 'bad') + '">' + (a.ok ? t('correct') : t('incorrect')) + '</span>';
+      return '<li><span class="ago" title="' + esc(fdate(a.ts)) + '">' + ago(a.ts) + '</span><b dir="auto">' + esc(a.name || t('unnamed')) + '</b> ' + t(ACT[a.type] || 'actOther') + extra + '</li>';
+    }).join('') + '</ul>';
+    h += '</div></div></div>';
+    app.innerHTML = h;
+    if (days.length > 1) drawDaily(days);
+    bindDash();
+  }
+  function bindDash() {
+    document.querySelectorAll('[data-lang]').forEach(function (b) { b.onclick = function () { setLang(b.dataset.lang); }; });
+    document.getElementById('t-refresh').onclick = load;
+    document.getElementById('t-csv').onclick = exportCSV;
+    document.getElementById('t-out').onclick = function () { lsSet(LS_KEY, ''); state.key = ''; state.data = null; state.view = 'login'; state.chip = 'idle'; state.err = ''; render(); };
+  }
+  function load() {
+    var k = state.key || lsGet(LS_KEY);
+    if (!k) { state.view = 'login'; render(); return; }
+    state.key = k;
+    app.innerHTML = topbar() + '<div class="wrap"><p class="muted">…' + t('loading') + '</p></div>';
+    apiGet({ action: 'dashboard', key: k }).then(function (d) {
+      if (d && d.ok) { state.data = d; state.view = 'dash'; render(); }
+      else { lsSet(LS_KEY, ''); state.view = 'login'; state.chip = 'no'; state.err = 'unauth'; render(); }
+    }, function () { state.view = 'login'; state.err = 'net'; render(); });
+  }
+
+  /* ---------- tiny dual-axis line chart ---------- */
+  function drawDaily(days) {
+    var host = document.getElementById('daily'); if (!host) return;
+    var W = 760, H = 300, pad = { l: 46, r: 52, t: 26, b: 40 };
+    var iw = W - pad.l - pad.r, ih = H - pad.t - pad.b;
+    var visits = days.map(function (x) { return x.visits || 0; });
+    var mins = days.map(function (x) { return Math.round((x.seconds || 0) / 60); });
+    var m1 = Math.max(1, Math.max.apply(null, visits)), m2 = Math.max(1, Math.max.apply(null, mins));
+    function X(i) { return pad.l + (i / (days.length - 1)) * iw; }
+    function Y1(v) { return pad.t + ih - (v / m1) * ih; }
+    function Y2(v) { return pad.t + ih - (v / m2) * ih; }
+    var g = '';
+    for (var i = 0; i <= 4; i++) {
+      var yy = pad.t + (ih * i) / 4;
+      g += '<line class="grid" x1="' + pad.l + '" x2="' + (W - pad.r) + '" y1="' + yy + '" y2="' + yy + '"/>';
+      g += '<text class="tick" x="' + (pad.l - 7) + '" y="' + (yy + 4) + '" text-anchor="end">' + Math.round(m1 - (m1 * i) / 4) + '</text>';
+      g += '<text class="tick" x="' + (W - pad.r + 7) + '" y="' + (yy + 4) + '" fill="#c46a2b">' + Math.round(m2 - (m2 * i) / 4) + '</text>';
+    }
+    var xt = Math.min(6, days.length - 1);
+    for (var j = 0; j <= xt; j++) {
+      var idx = Math.round((days.length - 1) * j / xt);
+      g += '<text class="tick" x="' + X(idx) + '" y="' + (H - pad.b + 18) + '" text-anchor="middle">' + esc(days[idx].day.slice(5)) + '</text>';
+    }
+    function path(vals, Y) { return vals.map(function (v, i) { return (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1); }).join(' '); }
+    var dots = '';
+    visits.forEach(function (v, i) { dots += '<circle cx="' + X(i) + '" cy="' + Y1(v) + '" r="3.2" fill="#1f3a5f"><title>' + esc(days[i].day + ' — ' + t('dailyV') + ': ' + v) + '</title></circle>'; });
+    mins.forEach(function (v, i) { dots += '<circle cx="' + X(i) + '" cy="' + Y2(v) + '" r="3.2" fill="#c46a2b"><title>' + esc(days[i].day + ' — ' + t('dailyM') + ': ' + v) + '</title></circle>'; });
+    host.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="chart" role="img">' + g +
+      '<path d="' + path(visits, Y1) + '" fill="none" stroke="#1f3a5f" stroke-width="2.5"/>' +
+      '<path d="' + path(mins, Y2) + '" fill="none" stroke="#c46a2b" stroke-width="2.5" stroke-dasharray="5 4"/>' + dots +
+      '<line x1="' + pad.l + '" x2="' + (pad.l + 20) + '" y1="12" y2="12" stroke="#1f3a5f" stroke-width="3"/><text class="legend" x="' + (pad.l + 26) + '" y="16">' + esc(t('dailyV')) + '</text>' +
+      '<line x1="' + (pad.l + 90) + '" x2="' + (pad.l + 110) + '" y1="12" y2="12" stroke="#c46a2b" stroke-width="3" stroke-dasharray="5 4"/><text class="legend" x="' + (pad.l + 116) + '" y="16">' + esc(t('dailyM')) + '</text></svg>';
+  }
+
+  /* ---------- CSV ---------- */
+  function exportCSV() {
+    var d = state.data; if (!d || !d.ok) return;
+    var head = ['name', 'last_seen', 'visits', 'study_minutes', 'lessons_done', 'progress_pct', 'quiz_pct'].concat(LESSONS.map(function (l) { return 'lesson_' + l.id; }));
+    var rows = (d.students || []).map(function (st) {
+      var base = ['"' + String(st.name || '').replace(/"/g, '""') + '"',
+        st.lastSeen ? new Date(st.lastSeen).toISOString().slice(0, 16).replace('T', ' ') : '',
+        st.visits || 0, Math.round((st.seconds || 0) / 60), st.lessonsDone || 0, Math.round(st.pct || 0),
+        st.quizTotal ? Math.round(st.quizCorrect / st.quizTotal * 100) : ''];
+      return base.concat(LESSONS.map(function (l) {
+        var p = (st.lessons || {})[l.id];
+        return p && p.done ? 'done' : (p && p.seconds > 0 ? Math.round(p.seconds / 60) + 'min' : '');
+      })).join(',');
+    });
+    var csv = '\uFEFF' + head.join(',') + '\n' + rows.join('\n');
+    try {
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+      a.download = 'acf-students-' + new Date().toISOString().slice(0, 10) + '.csv';
+      document.body.appendChild(a); a.click(); a.remove();
+    } catch (e) { }
+  }
+
+  /* boot */
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.title = t('docTitle');
+  if (lsGet(LS_KEY)) load(); else renderLogin();
+})();
+</script>
+</body>
+</html>
