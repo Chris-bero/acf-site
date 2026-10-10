@@ -1,0 +1,7 @@
+{
+  "name": "acf-platform-tests",
+  "private": true,
+  "description": "jsdom-based interaction, content-integrity and tracking smoke tests for the Advanced Corporate Finance platform.",
+  "scripts": { "test": "node test.js && node audit.js && node smoke.js" },
+  "devDependencies": { "jsdom": "^24.0.0" }
+}

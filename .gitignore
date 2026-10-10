@@ -1,0 +1,7 @@
+# dependencies (tests only)
+node_modules/
+package-lock.json
+
+# os / editor noise
+.DS_Store
+Thumbs.db
