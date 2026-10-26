@@ -45,5 +45,14 @@ window.ABBREV = [
   { sym: 'T', abbr: 'T', lesson: 'l7', en: 'tax rate (EBIT–EPS approach)', ar: 'معدل الضريبة (مدخل EBIT–EPS)' },
   { sym: 'r_{s}', abbr: 'rs', lesson: 'l8', en: 'estimated required return on equity', ar: 'العائد المطلوب المقدر على حقوق الملكية' },
   { sym: 'P', abbr: 'P', lesson: 'l8', en: 'estimated share value (zero-growth model)', ar: 'قيمة السهم المقدرة (نموذج النمو الصفري)' },
-  { sym: 'D, E, V', abbr: 'D/E/V', lesson: 'l5', en: 'debt, equity and total market value (V = D + E)', ar: 'الدين وحقوق الملكية والقيمة السوقية الكلية (V = D + E)' }
+  { sym: 'D, E, V', abbr: 'D/E/V', lesson: 'l5', en: 'debt, equity and total market value (V = D + E)', ar: 'الدين وحقوق الملكية والقيمة السوقية الكلية (V = D + E)' },
+
+  /* ---------- Module 3 / Chapter 14 ---------- */
+  { sym: 'DPS', abbr: 'DPS', lesson: 'l9', en: 'dividends per share (cash dividend per share)', ar: 'التوزيعات للسهم (التوزيع النقدي للسهم)' },
+  { sym: 'Ex-date', abbr: 'Ex', lesson: 'l9', en: 'ex-dividend date (record date − 2 business days)', ar: 'تاريخ عدم استحقاق التوزيعات (تاريخ القيد − يومي عمل)' },
+  { sym: 'DRIP', abbr: 'DRIP', lesson: 'l12', en: 'dividend reinvestment plan', ar: 'خطة إعادة استثمار التوزيعات' },
+  { sym: 'Par', abbr: 'par', lesson: 'l11', en: 'par (face) value per share', ar: 'القيمة الاسمية (الوجهية) للسهم' },
+  { sym: 'PIC', abbr: 'PIC', lesson: 'l11', en: 'paid-in capital in excess of par', ar: 'رأس المال المدفوع الإضافي فوق القيمة الاسمية' },
+  { sym: 'RE', abbr: 'RE', lesson: 'l11', en: 'retained earnings', ar: 'الأرباح المحتجزة' },
+  { sym: 'N_{rep}', abbr: 'Nrep', lesson: 'l12', en: 'shares repurchased in a buyback', ar: 'الأسهم المعاد شراؤها في عملية شراء' }
 ];

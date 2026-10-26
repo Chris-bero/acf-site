@@ -27,7 +27,7 @@ python3 -m http.server 8000
 ```bash
 cd site/tests
 npm install          # installs jsdom only (dev dependency)
-npm test             # runs test.js (73 interaction checks) + audit.js (94 integrity checks) + smoke.js (23 E2E checks: student site + teacher mini-site)
+npm test             # runs test.js (73 interaction checks) + audit.js (138 integrity checks) + smoke.js (23 E2E checks: student site + teacher mini-site)
 node ../../gas/test-gas.js   # optional: 33 backend checks for the Apps Script (no deps needed)
 ```
 
@@ -59,6 +59,12 @@ Notes for public repositories: the original lecture PDFs are bundled under `mate
 7. The EBIT–EPS approach & indifference point *(slides 17–23)*
 8. The Share-Value approach & optimal capital structure *(slides 24–33)*
 
+**Module 3 — Dividend Payout Policy (Lecture 3)**
+9. Payout Policy Basics & Dividend Dates *(slides 6–12)*
+10. Cash Dividend Policies — constant / regular / low-regular-extra / residual *(slides 14–22)*
+11. Stock Dividends & Stock Splits — price, EPS and equity-account effects *(slides 23–28)*
+12. Share Repurchases & DRIPs + supplementary policy drivers *(slides 29–32)*
+
 Every lesson follows the instructional framework: Learning Objectives → Prerequisite Foundations → The Big Picture → Academic Explanation → *Understand It Simply* → Formula Laboratory → Step-by-Step Worked Examples (reveal-one-step-at-a-time) → Visual Learning → Common Mistakes → Knowledge Check → Flashcards → Summary. Sections that are irrelevant to a topic are simply omitted rather than forced in.
 
 ---
@@ -74,7 +80,7 @@ site/
   js/charts.js          responsive SVG builders: bar, line (dual-axis), stacked bars, donut
   js/glossary.js        42 bilingual glossary entries with formulas + lesson links
   js/reference.js       bilingual symbol/abbreviation register (feeds the top-bar windows)
-  js/content1..4.js     ALL course content as data: every text field is an {en, ar} pair
+  js/content1..5.js     ALL course content as data: every text field is an {en, ar} pair
   js/tracking.js        OPTIONAL analytics layer (Google Sheets via Apps Script); inert without a URL
   js/app.js             hash router, block renderers, interactions, progress, search
   tests/                jsdom interaction + integrity + E2E smoke suites
