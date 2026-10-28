@@ -54,5 +54,15 @@ window.ABBREV = [
   { sym: 'Par', abbr: 'par', lesson: 'l11', en: 'par (face) value per share', ar: 'القيمة الاسمية (الوجهية) للسهم' },
   { sym: 'PIC', abbr: 'PIC', lesson: 'l11', en: 'paid-in capital in excess of par', ar: 'رأس المال المدفوع الإضافي فوق القيمة الاسمية' },
   { sym: 'RE', abbr: 'RE', lesson: 'l11', en: 'retained earnings', ar: 'الأرباح المحتجزة' },
-  { sym: 'N_{rep}', abbr: 'Nrep', lesson: 'l12', en: 'shares repurchased in a buyback', ar: 'الأسهم المعاد شراؤها في عملية شراء' }
+  { sym: 'N_{rep}', abbr: 'Nrep', lesson: 'l12', en: 'shares repurchased in a buyback', ar: 'الأسهم المعاد شراؤها في عملية شراء' },
+  { sym: 'M', abbr: 'M', lesson: 'l13', en: 'market price per share cum-rights', ar: 'سعر السوق للسهم مع الحقوق' },
+  { sym: 'S', abbr: 'S', lesson: 'l13', en: 'subscription price per new share (rights offering)', ar: 'سعر اكتتاب السهم الجديد (عرض الحقوق)' },
+  { sym: 'N', abbr: 'N', lesson: 'l13', en: 'rights needed to buy one new share', ar: 'الحقوق اللازمة لشراء سهم جديد واحد' },
+  { sym: 'R', abbr: 'R', lesson: 'l13', en: 'value of one right', ar: 'قيمة الحق الواحد' },
+  { sym: 'P_{ex}', abbr: 'Pex', lesson: 'l13', en: 'theoretical ex-rights price', ar: 'سعر Ex-rights النظري' },
+  { sym: 'f', abbr: 'f', lesson: 'l14', en: 'flotation/underwriting spread as a decimal', ar: 'هامش الإصدار/الاكتتاب كعدد عشري' },
+  { sym: 'X', abbr: 'X', lesson: 'l14', en: 'gross proceeds needed to net a target', ar: 'إجمالي المتحصلات اللازم لصافٍ مستهدف' },
+  { sym: 'P_{0}', abbr: 'P0', lesson: 'l15', en: 'IPO offer price', ar: 'سعر عرض IPO' },
+  { sym: 'P_{1}', abbr: 'P1', lesson: 'l15', en: 'first-day closing price', ar: 'سعر إغلاق اليوم الأول' },
+  { sym: 'MF, UF, SC', abbr: 'MF/UF/SC', lesson: 'l16', en: 'management fee, underwriting fee, selling concession (per share)', ar: 'رسم الإدارة ورسم الاكتتاب وعمولة البيع (للسهم)' }
 ];

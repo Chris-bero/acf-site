@@ -110,7 +110,7 @@ function vcFor(errors) {
   const evq = gas.received.find(e => e.type === 'quiz_answer');
   log('student: quiz_answer shape', evq && evq.lesson === 'l1' && typeof evq.block === 'number' && typeof evq.ok === 'boolean');
   const evp = gas.received.find(e => e.type === 'progress');
-  log('student: progress snapshot shape', evp && Array.isArray(evp.completed) && evp.completed.includes('l1') && evp.pct === 8 && evp.total === 12);
+  log('student: progress snapshot shape', evp && Array.isArray(evp.completed) && evp.completed.includes('l1') && evp.pct === 6 && evp.total === 16);
   log('student: all events share sid+name', gas.received.every(e => e.sid && e.name === 'E2E Student'));
   log('student: unique event ids', new Set(gas.received.map(e => e.id)).size === gas.received.length);
   log('student: queue drained after flush', TR.queueCount() === 0, 'q=' + TR.queueCount());

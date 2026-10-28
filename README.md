@@ -27,7 +27,7 @@ python3 -m http.server 8000
 ```bash
 cd site/tests
 npm install          # installs jsdom only (dev dependency)
-npm test             # runs test.js (73 interaction checks) + audit.js (138 integrity checks) + smoke.js (23 E2E checks: student site + teacher mini-site)
+npm test             # runs test.js (73 interaction checks) + audit.js (182 integrity checks) + smoke.js (23 E2E checks: student site + teacher mini-site)
 node ../../gas/test-gas.js   # optional: 33 backend checks for the Apps Script (no deps needed)
 ```
 
@@ -65,6 +65,12 @@ Notes for public repositories: the original lecture PDFs are bundled under `mate
 11. Stock Dividends & Stock Splits — price, EPS and equity-account effects *(slides 23–28)*
 12. Share Repurchases & DRIPs + supplementary policy drivers *(slides 29–32)*
 
+**Module 4 — Preferred & Common Stocks (Lecture 4)**
+13. Shareholder Rights & the Rights Offering *(slides 4–9)*
+14. Issuing Common Stock & Flotation Costs *(slides 10–15)*
+15. Venture Capital & IPO Underpricing *(slides 16–21)*
+16. Investment Bankers, Spreads & Syndicates *(slides 22–31)*
+
 Every lesson follows the instructional framework: Learning Objectives → Prerequisite Foundations → The Big Picture → Academic Explanation → *Understand It Simply* → Formula Laboratory → Step-by-Step Worked Examples (reveal-one-step-at-a-time) → Visual Learning → Common Mistakes → Knowledge Check → Flashcards → Summary. Sections that are irrelevant to a topic are simply omitted rather than forced in.
 
 ---
@@ -80,7 +86,7 @@ site/
   js/charts.js          responsive SVG builders: bar, line (dual-axis), stacked bars, donut
   js/glossary.js        42 bilingual glossary entries with formulas + lesson links
   js/reference.js       bilingual symbol/abbreviation register (feeds the top-bar windows)
-  js/content1..5.js     ALL course content as data: every text field is an {en, ar} pair
+  js/content1..6.js     ALL course content as data: every text field is an {en, ar} pair
   js/tracking.js        OPTIONAL analytics layer (Google Sheets via Apps Script); inert without a URL
   js/app.js             hash router, block renderers, interactions, progress, search
   tests/                jsdom interaction + integrity + E2E smoke suites

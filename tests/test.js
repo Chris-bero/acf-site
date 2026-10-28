@@ -26,7 +26,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 
   // ---- dashboard / defaults ----
   log('default lang EN + LTR', doc.documentElement.lang === 'en' && doc.documentElement.dir === 'ltr');
-  log('12 lesson cards', $$('.lesson-card').length === 12, 'got ' + $$('.lesson-card').length);
+  log('16 lesson cards', $$('.lesson-card').length === 16, 'got ' + $$('.lesson-card').length);
   log('reference links in top bar', $$('a[href^="#/ref/"]').length === 3, 'got ' + $$('a[href^="#/ref/"]').length);
 
   // ---- lesson 1 ----
@@ -79,7 +79,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     window.location.hash = '#/ref/' + kind; await wait(220);
     log('ref page renders: ' + kind, !!$('#ref-list') && $$('.ref-group').length >= 2, 'groups=' + $$('.ref-group').length);
     log('ref page items: ' + kind, $$('.ref-item').length > 5, 'items=' + $$('.ref-item').length);
-    log('chapter chips present (3 modules): ' + kind, $$('[data-refchap]').length === 4, 'chips=' + $$('[data-refchap]').length);
+    log('chapter chips present (3 modules): ' + kind, $$('[data-refchap]').length === 5, 'chips=' + $$('[data-refchap]').length);
     const allItems = $$('.ref-item').length;
     $$('[data-refchap]').find(c => c.dataset.chap === 'm1').click(); await wait(200);
     log('chapter filter narrows to ch8: ' + kind, $$('.ref-group').length === 1 && $$('.ref-item').length < allItems, 'groups=' + $$('.ref-group').length + ' items=' + $$('.ref-item').length);
